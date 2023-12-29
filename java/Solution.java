@@ -62,4 +62,47 @@ public class Solution {
         }
         return k;
     }
+    public int majorityElement(int[] nums) {
+        int majority;
+        int count = 0;
+        int length;
+        if(nums.length % 2 == 0) {
+            majority = nums.length/2 + 1;
+            length = nums.length/2 -1;
+        }
+        else{
+            majority = nums.length/2 + 1;
+            length = nums.length/2;
+        }
+        for(int i = 0; i < length; i++) {
+            int temp = nums[i];
+            for(int j = nums.length - 1; j>= i; j--) {
+                if(nums[j] == temp) {
+                    count += 1;
+                }
+            }
+            if(count == majority) {
+                return temp;
+            }
+        }
+        return count;
+    }
+    public void rotate(int[] nums, int k) {
+        int l = k;
+        for(int i = k - 1; i >= 0; i--) {
+            int temp = nums[i];
+            nums[i] = nums[nums.length - k + i];
+            nums[nums.length - k + i] = temp;
+        }
+        for(int i = nums.length - k; i < nums.length; i++) {
+            int j = i;
+            while(j > l) {
+                int temp = nums[j-1];
+                nums[j-1] = nums[j];
+                nums[j] = temp;
+                j--;
+            }
+            l++;
+        }
+    }
 }

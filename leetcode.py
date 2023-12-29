@@ -1,5 +1,5 @@
 class Solution:
-    def merge(self, nums1, m: int, nums2, n: int):
+    def merge(self, nums1, m:int, nums2, n:int):
         for num in range(m, len(nums1)):
             nums1[num] = (nums2[num-m])
             i = num
@@ -83,6 +83,40 @@ class Solution:
                     count += 1
             if count == majority:
                 return temp
+    def rotate(self, nums, k):
+        for i in range(k-1,-1,-1):
+            temp = nums[i]
+            nums[i] = nums[len(nums)-k+i]
+            nums[len(nums) - k + i] = temp
+        l = k
+        for i in range(len(nums)-k, len(nums), 1):
+            for j in range(i, l, -1):
+                temp = nums[j - 1]
+                nums[j-1] = nums[j]
+                nums[j] = temp
+            l = l + 1
+    def rotate2(self, nums, k):
+        for i in range(k-1,-1,-1):
+            temp = nums[i]
+            nums[i] = nums[len(nums)-k+i]
+            nums[len(nums)-k+i] = temp
+        for i in range(len(nums)-k +1, len(nums), 1):
+            for j in range(i, len(nums) - k, -1):
+                temp = nums[j-1]
+                nums[j-1] = nums[j]
+                nums[j] = temp
+        for i in range(len(nums)-k, len(nums), 1):
+            for j in range(i, k, -1):
+                temp = nums[j-1]
+                nums[j-1] = nums[j]
+                nums[j] = temp
+
+
+
+    
+
+
+
 
 
             
@@ -92,7 +126,7 @@ class Solution:
                 
 
 solution = Solution
-result5 = solution.majorityElement(solution, [3,2,3])
-result6 = solution.majorityElement(solution, [2,2,1,1,1,2,2])
-print(result5)
-print(result6)
+list1 = [1,2,3,4,5,6,7]
+solution.rotate2(solution, list1, 1)
+for i in list1:
+    print(i)

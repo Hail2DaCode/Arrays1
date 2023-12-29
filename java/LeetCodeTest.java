@@ -26,20 +26,15 @@ public class LeetCodeTest {
         solution.merge(nums3,1,nums4,0);
         solution.merge(nums5,0,nums6,1); */
         Solution solution = new Solution();
-        int[] nums = {1,1,2};
-        System.out.println(String.format("k is %d", solution.removeDuplicates(nums)));
-        for (int i = 0; i < nums.length; i++) {
-            System.out.println(nums[i]);
+        int[] numbers = {1,2,3,4,5,6};
+        int[] nums2 = {-1,-100,3,99};
+        solution.rotate(numbers,3);
+        solution.rotate(nums2,2);
+        for(int i = 0; i < numbers.length; i++) {
+            System.out.println(numbers[i]);
         }
-        int[] nums2 = {1,1,1,2,2,3};
-        System.out.println(String.format("k is %d", solution.removeDuplicatesMedium(nums2)));
-        for (int i = 0; i < nums2.length; i++) {
-            System.out.println(nums2[i]);
-        }
-        int[] nums3 = {0,0,1,1,1,2,3,3};
-        System.out.println(String.format("k is %d", solution.removeDuplicatesMedium(nums3)));
-        for (int i = 0; i < nums3.length; i++) {
-            System.out.println(nums3[i]);
+        for(int i = 0; i < nums2.length; i++) {
+            System.out.println(String.format("rotate %d",nums2[i]));
         }
 }
 }
