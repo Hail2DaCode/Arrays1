@@ -26,10 +26,10 @@ public class LeetCodeTest {
         solution.merge(nums3,1,nums4,0);
         solution.merge(nums5,0,nums6,1); */
         Solution solution = new Solution();
-        int[] numbers = {1,2,3,4,5,6};
+        int[] numbers = {1,2,3,4,5,6,7};
         int[] nums2 = {-1,-100,3,99};
-        solution.rotate(numbers,3);
-        solution.rotate(nums2,2);
+        solution.rotate2(numbers,3);
+        solution.rotate(nums2,3);
         for(int i = 0; i < numbers.length; i++) {
             System.out.println(numbers[i]);
         }

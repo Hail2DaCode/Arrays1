@@ -1,4 +1,5 @@
 public class Solution {
+    import java.util.HashMap;
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         for(int i = m; i < nums1.length; i++) {
             nums1[i] = nums2[i-m];
@@ -103,6 +104,43 @@ public class Solution {
                 j--;
             }
             l++;
+        }
+    }
+    public void rotate2(int[] nums, int k) {
+        for(int i = k - 1; i >= 0; i--) {
+            int temp = nums[i];
+            nums[i] = nums[nums.length - k + i];
+            nums[nums.length - k + i] = temp;
+        }
+        for (int i = nums.length - k +1; i < nums.length; i++) {
+            for(int j = i; j > nums.length - k; j--) {
+                int temp = nums[j-1];
+                nums[j-1] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        for(int i = nums.length - k; i < nums.length; i++) {
+            for(int j = i; j > k; j--) {
+                int temp = nums[j-1];
+                nums[j-1] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+    public void rotate3(int[] nums, int k) {
+        HashMap<Integer,Integer> hash = new HashMap<>();
+        for(int i = 0; i < nums.length; i++) {
+            hash.put(i, nums[i]);
+        }
+        for(int i = 0; i < nums.length; i++) {
+            int count = i;
+            for(int j = 0; j < k; j++) {
+                count += 1;
+                if(count == nums.length) {
+                    count = 0;
+                }
+            }
+            nums[count] = hash.get(i);
         }
     }
 }
