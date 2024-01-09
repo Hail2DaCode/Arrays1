@@ -110,6 +110,65 @@ class Solution:
                 temp = nums[j-1]
                 nums[j-1] = nums[j]
                 nums[j] = temp
+    def rotate3(self, nums, k):
+        hash = {}
+        for i in range(len(nums)):
+            hash[i] = nums[i]
+        for i in range(len(nums)):
+            count = i
+            for j in range(k):
+                count += 1
+                if count == len(nums):
+                    count = 0    
+            #print(count)
+            nums[count] = hash[i]
+            """ count = i + k
+            if count >= len(nums):
+                count = count - len(nums)
+                print(count)
+                nums[count] = hash[i]
+            else:
+                nums[count] = hash[i] """
+    def maxProfit(self, prices):
+        low = prices[0]
+        lowDay = 0
+        for i in range(1, len(prices), 1):
+            if low > prices[i]:
+                low = prices[i]
+                lowDay = i
+        high = low
+        for i in range(lowDay, len(prices), 1):
+            if high < prices[i]:
+                high = prices[i]
+        return high - low
+    def maxProfitMedium(self, prices):
+        profit  = 0
+        i = 0
+        while( i < len(prices) - 1):
+            #print("start")
+            low = prices[i]
+            if low < prices[i+1]:
+                high = prices[i+1]
+                i = i + 1
+                while i < len(prices) - 1 and high < prices[i+1]:
+                    high = prices[i+1]
+                    #print(i)
+                    i = i + 1
+                profit = profit + (high - low)
+                #print(i)
+            #print(i)
+            if i == len(prices) - 1:
+                break
+            i = i + 1
+        return profit
+
+
+
+        
+            
+
+
+
 
 
 
@@ -126,7 +185,8 @@ class Solution:
                 
 
 solution = Solution
-list1 = [1,2,3,4,5,6,7]
-solution.rotate2(solution, list1, 1)
-for i in list1:
-    print(i)
+prices = [1,2,3,4,5]
+prices2 = [7,1,5,3,6,4]
+prices3 = [7,6,4,3,1]
+print(solution.maxProfitMedium(solution,prices3))
+

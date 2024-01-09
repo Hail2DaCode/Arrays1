@@ -1,5 +1,5 @@
+import java.util.HashMap;
 public class Solution {
-    import java.util.HashMap;
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         for(int i = m; i < nums1.length; i++) {
             nums1[i] = nums2[i-m];
@@ -142,5 +142,22 @@ public class Solution {
             }
             nums[count] = hash.get(i);
         }
+    }
+    public int maxProfit(int[] prices) {
+        int low = prices[0];
+        int lowDay = 0;
+        for(int i = 1; i < prices.length; i++) {
+            if(low > prices[i]) {
+                low = prices[i];
+                lowDay = i;
+            }
+        }
+        int high = low;
+        for(int i = lowDay + 1; i < prices.length; i++) {
+            if(high < prices[i] ) {
+                high = prices[i];
+            }
+        }
+        return high - low;
     }
 }
