@@ -489,3 +489,4 @@ function revArray(arr) {
 }
 let string = "Brian";
 console.log(string[-1]);
+

@@ -160,4 +160,161 @@ public class Solution {
         }
         return high - low;
     }
+    public int maxProfitMedium(int[] prices) {
+        int profit = 0;
+        for (int i = 0; i < prices.length - 1; i++) {
+            int low = prices[i];
+            if (low < prices[i + 1]) {
+                int high = prices[i + 1];
+                i++;
+                while(i < prices.length - 1 && high < prices[i + 1] ) {
+                    high = prices[i + 1];
+                    i++;
+                }
+                profit = profit + (high - low);
+            }
+        }
+        return profit;
+    }
+    public boolean canJump(int[] nums) {
+        for(int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] == 0 && nums[i+1] != 0) {
+                System.out.println("First Branch");
+                int jump = 2;
+                for(int j = i - 1; j >= 0; j--) {
+                    if(nums[j] >= jump) {
+                        System.out.println("here");
+                        break;
+                    }
+                    if (j == 0 && nums[j] < jump) {
+                        return false;
+                    }
+                    jump += 1;
+                }
+            }
+            if (nums[i] == 0 && nums[i+1] == 0) {
+                System.out.println("Second Branch");
+                int j = i;
+                int jump = 1;
+                while (j < nums.length && nums[j] == 0) {
+                    jump += 1;
+                    if ( j == nums.length - 1) {
+                        jump -= 1;
+                    }
+                    j += 1;
+                }
+                for(int k = i - 1; k >= 0; k--) {
+                    if(nums[k] >= jump) {
+                        break;
+                    }
+                    if( k == 0 && nums[k] < jump) {
+                        return false;
+                    }
+                    jump += 1;
+                }
+            }
+        }
+        return true;
+    }
+    public int jump2(int[] nums) {
+        int end = nums.length - 1;
+        int solution = end;
+        for(int j = nums[0]; j > 0; j--) {
+            int steps = 0;
+            int i = 0;
+            int sum = 0;
+            while(i < end) {
+                if (nums[i] == 0) {
+                    break;
+                }
+                if(i == 0) {
+                    sum += j;
+                    steps += 1;
+                    i = i + j;
+                    continue;
+                }
+                else {
+                    sum += nums[i];
+                    steps += 1;
+                    i = i + nums[i];
+                }
+                if(sum >= end && steps < solution) {
+                    solution = steps;
+                }
+            }
+        }
+        return solution;
+    }
+    public int hIndex(int[] nums) {
+        int papers = nums.length;
+        for(int i = papers; i > 0; i--) {
+            int citations = 0;
+            for(int j = 0; j < papers; j++) {
+                if(nums[j] >= i) {
+                    citations += 1;
+                }
+            }
+            if(citations >= i) {
+                return i;
+            }
+        }
+        return 0;
+    }
+    public int[] productExceptSelf(int[] nums) {
+        int product = 1;
+        int count = 0;
+        int[] answer = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0 && count == 0) {
+                count += 1;
+                continue;
+            }
+            else if (nums[i] == 0 && count == 1) {
+                count += 1;
+                product = 0;
+                break;
+            }
+            else {
+                product *= nums[i];
+            }
+        }
+        for (int j = 0; j < nums.length; j++) {
+            if (count == 1 && nums[j] != 0) {
+                answer[j] = 0;
+            }
+            else if (count == 1 && nums[j] == 0) {
+                answer[j] = product;
+            }
+            else if (nums[j] == 0) {
+                answer[j] = product;
+            }
+            else {
+                int result = (int)(product * (Math.pow(nums[j], -1)));
+                answer[j] = result;
+                //System.out.println(answer[j]);
+            }
+        }
+        return answer;
+
+    }
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        for (int i = 0; i < gas.length; i++) {
+            int tank = 0;
+            int j = i;
+            for (int count = 0; count <= gas.length; count++) {
+                if (count == gas.length) {
+                    return i;
+                }
+                tank = tank + gas[j] - cost[j];
+                if (tank < 0) {
+                    break;
+                }
+                if (j == gas.length - 1) {
+                    j = -1;
+                }
+                j += 1;
+            }
+        }
+        return -1;
+    }
 }

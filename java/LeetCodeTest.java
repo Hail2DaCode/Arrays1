@@ -27,8 +27,13 @@ public class LeetCodeTest {
         solution.merge(nums3,1,nums4,0);
         solution.merge(nums5,0,nums6,1); */
         Solution solution = new Solution();
-        int[] prices = {7,1,5,3,6,4};
-        int profit = solution.maxProfit(prices);
-        System.out.println(profit);
+        int[] gas = {1,2,3,4,5};
+        int[] cost = {3,4,5,1,2};
+        int[] gas2 = {2,3,4};
+        int[] cost2 = {3,4,3};
+        int result = solution.canCompleteCircuit(gas, cost);
+        int result2 = solution.canCompleteCircuit(gas2, cost2);
+        System.out.println(result);
+        System.out.println(result2);
 }
 }
