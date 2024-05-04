@@ -30,14 +30,10 @@ public class LeetCodeTest {
         Solution solution = new Solution();
 	int number1 = 19;
 	int number2 = 2;
-	int number3 = 4;
 	boolean	result1 = solution.isHappy(number1);
 	boolean	result2 = solution.isHappy(number2);
-	boolean	result3 = solution.isHappy(number3);
 	System.out.print(result1);
 	System.out.print("\n");	
 	System.out.print(result2);	
-	System.out.print("\n");	
-	System.out.print(result3);	
       }
 }

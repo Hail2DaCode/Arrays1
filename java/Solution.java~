@@ -799,6 +799,7 @@ public class Solution {
 		    }
 		    for(int num : array) {
 			    total += num * num;
+			    System.out.println(total);
 		    }
 		    if(data.get(total) == null) {
 			    data.put(total,1);
