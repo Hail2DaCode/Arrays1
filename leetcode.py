@@ -682,6 +682,263 @@ class Solution:
         n = total
         print(total)
         return self.isHappyRecursion(self, n, data)
+    def containsNearbyDuplicates(self, nums, k):
+        data = {}
+        for i in range(len(nums)):
+            try:
+                data[nums[i]]
+            except:
+                data[nums[i]] = i
+            else:
+                num = abs(data[nums[i]] - i)
+                if(num <= k):
+                    return True
+                else:
+                    data[nums[i]] = i
+        return False
+    def longestConsecutive1(self, nums):
+        max = nums[0]
+        for i in range(1,len(nums),1):
+            if nums[i] > max:
+                max = nums[i]
+        count_array = [0] * (max + 1)
+        for num in nums:
+            count_array[num] += 1
+        for i in range(1, max + 1):
+            count_array[i] += count_array[i-1]
+        sort_nums = [0] * len(nums)
+        for i in range(len(nums) - 1, - 1, -1):
+            sort_nums[count_array[nums[i]] - 1] = nums[i]
+            count_array[nums[i]] -= 1
+        sequence = []
+        count = 1
+        for i in range(0, len(sort_nums) - 1, 1):
+            if sort_nums[i + 1] == sort_nums[i]:
+                continue
+            elif sort_nums[i + 1] - 1 == sort_nums[i]:
+                count += 1
+            else:
+                sequence.append(count)
+                count = 1
+        sequence.append(count)
+        max = sequence[0]
+        for num in sequence:
+            if num > max:
+                max = num
+        return max
+    def longestConsecutive2(self, nums):
+        data = {}
+        min_array = []
+        min_number = 0
+        matches = 0
+        count_array = []
+        count = 1
+        for num in nums:
+            data[num] = 0
+        for num in nums:
+            if data.get(num + 1) != None or data.get(num - 1) != None:
+                data[num] = 1
+        for key in data:
+            if data[key] == 1 and data.get(key - 1, "No") == "No":
+                print("This is the " +str(key))
+                min_number += 1
+                min_array.append(key)
+            elif data[key] == 1:
+                matches += 1
+        if min_number > 0:
+            index = 0
+            for i in range(matches + min_number):
+                if data.get(min_array[index] + count) != None:
+                            count += 1
+                else:
+                            count_array.append(count)
+                            count = 1
+                            if index < len(min_array):
+                                index += 1
+                            else:
+                                break
+            count_array.append(count)
+            high = count_array[0]
+            for num in count_array:
+                if num > high:
+                    high = num
+            return high
+        else:
+            return 1
+    def isPalindrome(self, s):
+        data = {}
+        word = ""
+        for i in range(65, 91):
+            data[chr(i)] = chr(i + 32) 
+        for letter in s:
+            if ord(letter) >= 48 and ord(letter) <= 57:
+                word += letter
+            elif ord(letter) >= 65 and ord(letter) <= 90:
+                word += data[letter]
+            elif ord(letter) >= 97 and ord(letter) <= 122:
+                word += letter
+            else:
+                continue
+        iterator = len(word) - 1
+        for letter in word:
+            if letter != word[iterator]:
+                return False
+            iterator -= 1
+        return True
+    def isSubsequence(self, s, t):
+        iterator = 0
+        for letter in t:
+            if s[iterator] == letter:
+                iterator += 1
+        if iterator != len(s):
+            return False
+        return True
+    def twoSumII(self, numbers, target):
+        index = 0
+        sum = 0
+        result = []
+        for i in range(len(numbers), 0, -1):
+            if target >= numbers[i-1]:
+                index = i + 1
+                print(index)
+                break
+        if index == 2:
+            result = [1,2]
+        else:
+            for i in range(1,index):
+                for j in range(i+1,index):
+                    sum = numbers[i-1] + numbers[j-1]
+                    print(sum)
+                    if sum == target:
+                        result.append(i)
+                        result.append(j)
+        return result
+    def maxArea(self, height):
+        area = 1
+        for i in range(len(height)):
+            for j in range(len(height) - 1,i, -1):
+                max_height = 1 
+                if height[j] > height[i]:
+                    max_height = height[i]
+                else:
+                    max_height = height[j]
+                length = j - i
+                product = max_height * length
+                if product > area:
+                    area = product
+        return area
+    def threeSum(self, nums):
+        result = []
+        count = 0
+        skip = False
+        zero = []
+        for i in range(len(nums) - 2):
+            for j in range(i + 1, len(nums) - 1):
+                next = []
+                for k in range(j + 1, len(nums)):
+                    if ((nums[i] + nums[j] + nums[k]) == 0):
+                        if nums[i] == 0 and nums[j] == 0 and nums[k] ==0:
+                            zero.append(nums[i])
+                            zero.append(nums[j])
+                            zero.append(nums[k])
+                            continue
+                        if count > 0:
+                            data = {}
+                            data[nums[i]] = True
+                            data[nums[j]] = True
+                            data[nums[k]] = True
+                            for array in result:
+                                stop = 0
+                                try:
+                                    data[array[0]]
+                                except:
+                                    pass
+                                else:
+                                    stop += 1
+                                try:
+                                    data[array[1]]
+                                except:
+                                    pass
+                                else:
+                                    stop += 1
+                                try:
+                                    data[array[2]]  
+                                except:
+                                    pass
+                                else:
+                                    stop += 1
+                                if stop == 3:
+                                    skip = True
+                                    break
+                        if not skip:
+                            next.append(nums[i])
+                            next.append(nums[j])
+                            next.append(nums[k])
+                            result.append(next)
+                            count += 1
+                        skip = False
+        if len(zero) > 1:
+            result.append(zero)
+        return result
+    def threeSum2(self, nums):
+        result = []
+        count = 0
+        skip = False
+        for i in range(len(nums) - 2):
+            for j in range(i + 1, len(nums) - 1):
+                next = []
+                for k in range(j + 1, len(nums)):
+                    if nums[i] + nums[j] + nums[k] == 0:
+                        if count > 0:
+                            for array in result:
+                                stop = 0
+                                if nums[i] == array[0] or nums[i] == array[1] or nums[i] == array[2]:
+                                    stop += 1
+                                if nums[j] == array[0] or nums[j] == array[1] or nums[j] == array[2]:
+                                    stop += 1
+                                if nums[k] == array[0] or nums[k] == array[1] or nums[k] == array[2]:
+                                    stop += 1
+                                if stop == 3:
+                                    skip = True
+                                    break
+                        if not skip:
+                            next.append(nums[i])
+                            next.append(nums[j])
+                            next.append(nums[k])
+                            result.append(next)
+                            count += 1
+                        skip = False
+        return result
+
+                                        
+                             
+
+
+         
+
+
+                
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+            
+
+
+           
+         
+
+        
         
 
     
@@ -772,11 +1029,16 @@ class Solution:
                 
 
 solution = Solution
-number = 19
-number2 = 2
-dict = {}
-result1 = solution.isHappyRecursion(solution, number, dict)
+arr1 = [-1,0,1,2,-1,-4]
+arr2 = [0,1,1]
+arr3 = [0,0,0]	
+arr4 = [-2,0,2,0,4,-4,2,-2,4,4,-4,6,0]
+result1 = solution.threeSum(solution, arr1)
+result2 = solution.threeSum(solution, arr2)
+result3 = solution.threeSum(solution, arr3)
+result4 = solution.threeSum(solution, arr4)
 print(result1)
-result2 = solution.isHappyRecursion(solution, number2, dict)
 print(result2)
+print(result3)
+print(result4)
 

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.HashMap;
+import java.util.HashMap;
 
 public class LeetCodeTest {
     public static void main(String[] args) {
@@ -28,16 +28,37 @@ public class LeetCodeTest {
         solution.merge(nums3,1,nums4,0);
         solution.merge(nums5,0,nums6,1); */
         Solution solution = new Solution();
-	int number1 = 19;
-	int number2 = 2;
-	int number3 = 4;
-	boolean	result1 = solution.isHappy(number1);
-	boolean	result2 = solution.isHappy(number2);
-	boolean	result3 = solution.isHappy(number3);
-	System.out.print(result1);
-	System.out.print("\n");	
-	System.out.print(result2);	
-	System.out.print("\n");	
-	System.out.print(result3);	
-      }
-}
+	int[] arr1 = {-1,0,1,2,-1,-4};
+	int[] arr2 = {0,1,1};
+	int[] arr3 = {0,0,0};
+	int[] arr4 = {-2,0,2,0,4,-4,2,-2,4,4,-4,6,0};
+	List<int[]> result1 = solution.threeSum(arr1);
+	List<int[]> result2 = solution.threeSum(arr2);
+	List<int[]> result3 = solution.threeSum(arr3);
+	List<int[]> result4 = solution.threeSum(arr4);
+	System.out.println(result1);
+	for(int[] arr : result1) {
+		System.out.printf("result1: %d, %d, %d", arr[0], arr[1], arr[2]);
+		System.out.print("\n");
+	}
+	for(int[] arr : result2) {
+		System.out.printf("result2: %d, %d, %d", arr[0], arr[1], arr[2]);
+		System.out.print("\n");
+	}
+	for(int[] arr : result3) {
+		System.out.printf("result3: %d, %d, %d", arr[0], arr[1], arr[2]);
+		System.out.print("\n");
+	}
+	for(int[] arr : result4) {
+		System.out.printf("result4: %d, %d, %d", arr[0], arr[1], arr[2]);
+		System.out.print("\n");
+	}
+
+		
+
+
+
+
+
+	}
+    }

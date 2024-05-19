@@ -32,10 +32,10 @@ public class LeetCodeTest {
 	int[] arr2 = {0,1,1};
 	int[] arr3 = {0,0,0};
 	int[] arr4 = {-2,0,2,0,4,-4,2,-2,4,4,-4,6,0};
-	List<int[]> result1 = solution.threeSum2(arr1);
-	List<int[]> result2 = solution.threeSum2(arr2);
-	List<int[]> result3 = solution.threeSum2(arr3);
-	List<int[]> result4 = solution.threeSum2(arr4);
+	List<int[]> result1 = solution.threeSum(arr1);
+	List<int[]> result2 = solution.threeSum(arr2);
+	List<int[]> result3 = solution.threeSum(arr3);
+	List<int[]> result4 = solution.threeSum(arr4);
 	System.out.println(result1);
 	for(int[] arr : result1) {
 		System.out.printf("%d, %d, %d", arr[0], arr[1], arr[2]);
