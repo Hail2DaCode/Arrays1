@@ -1392,6 +1392,36 @@ public class Solution {
         }
         return true;
     }
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return root;
+        }
+        ArrayList<TreeNode> q = new ArrayList<TreeNode>();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode curr = q.remove(0);
+            if (curr.left != null && curr.right != null) {
+                TreeNode temp = curr.left;
+                curr.left = curr.right;
+                curr.right = temp;
+                q.add(curr.left);
+                q.add(curr.right);
+            }
+            else {
+                if (curr.left != null) {
+                    curr.right = curr.left;
+                    curr.left = null;
+                    q.add(curr.right);
+                }
+                if (curr.right != null) {
+                    curr.left = curr.right;
+                    curr.right = null;
+                    q.add(curr.left);
+                }
+            }
+        }
+        return root;
+    }
     
 
 
