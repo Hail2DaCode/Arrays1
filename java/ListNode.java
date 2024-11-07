@@ -42,7 +42,7 @@ public class ListNode {
                     ListNode.display(list1);
                     ListNode.display(list2);
                     break;
-                }
+        	}
                 list2 = list2.next;
                 System.out.println(list2.val);
             }

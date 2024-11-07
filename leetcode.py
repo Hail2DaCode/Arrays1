@@ -1,5 +1,26 @@
 import random
 import math
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+class LinkedList:
+    def __init__(self):
+        self.head = None
+class RandNode:
+    def __init__(self, x, next=None, random=None):
+        self.val = x
+        self.next = next
+        self.random = random
+class ListNode(object):
+    def __init__(self, val = 0, next = None):
+        self.val = val
+        self.next = next
+class TreeNode(object):
+    def __init__(self, val = 0, left = None, right = None):
+        self.val = val
+        self.left = left
+        self.right = right
 class Solution:
     def merge(self, nums1, m:int, nums2, n:int):
         for num in range(m, len(nums1)):
@@ -909,6 +930,367 @@ class Solution:
                             count += 1
                         skip = False
         return result
+    def hasCycle(self, head):
+        current = head
+        data = {}
+        while(current.next != None or data.get(current) != None):
+            data[current] = current.data
+            if data.get(current.next) != None:
+                return True
+            current = current.next
+        return False
+    def addTwoNumbers(self, l1, l2):
+        current = l1.head
+        string1 = ""
+        while(current != None):
+            string1 = str(current.data) + string1
+            current = current.next
+        first_num = int(string1)
+        string1 = ""
+        current = l2.head
+        while(current != None):
+            string1 = str(current.data) + string1
+            current = current.next
+        second_num = int(string1)
+        sum = first_num + second_num
+        string1 = str(sum)
+        link_list = LinkedList()
+        for i in range(len(string1)):
+            #nodei = Node(int(string1[i]))
+            if i == 0:
+                link_list.head = Node(int(string1[i]))
+            else:
+                old_head = link_list.head
+                link_list.head = Node(int(string1[i]))
+                link_list.head.next = old_head
+        return link_list
+    def mergeTwoLists(self, list1, list2):
+        current1 = list1
+        current2 = list2
+        new_head = None
+        if current1.data == None or current2.data == None:
+            if current2.data != None:
+                return list2
+        else:
+            if current2.data < current1.data:
+                new_head = current2
+                while current2.next != None and current2.next.data < current1.data:
+                    current2 = current2.next
+                head2 = current2.next
+                current2.next = current1
+                current2 = head2
+            while(current1.next != None):
+                while(current2 != None and current2.data <= current1.next.data):
+                    head1 = current1.next
+                    head2 = current2.next
+                    current1.next = current2
+                    current2.next = head1
+                    current2 = head2
+                current1 = current1.next
+            if current2 != None and current2.data > current1.data:
+                current1.next = current2
+        if new_head != None:
+            return new_head
+        return list1
+    def copyRandomList(self, head):
+        node_array = []
+        index_array = []
+        current = head
+        while current != None:
+            node = RandNode(current.val)
+            node_array.append(node)
+            current2 = head
+            count = 0
+            if current.next == None:
+                node_array.append(None)
+            while current2 != None:
+                if current2 == current.random:
+                    index_array.append(count)
+                    break
+                count += 1
+                if current2.next == None:
+                    index_array.append(count)
+                current2 = current2.next
+            current = current.next
+        for i in range(len(node_array)-1):
+            node_array[i].next = node_array[i+1]
+            node_array[i].random = node_array[index_array[i]]
+        return node_array[0]
+    def reverseBetween(self, head, left, right):
+        array = [None] * (right-left+1)
+        position = 1
+        current = head
+        index = len(array) - 1
+        while current != None:
+            if position >= left and position <= right:
+                array[index] = current.val
+                index -= 1
+                print(f'index: {current.val}')
+            position += 1
+            current = current.next
+        position = 1
+        index = 0
+        current = head
+        while current != None:
+            if position >= left and position <= right:
+                current.val = array[index]
+                index += 1
+            position += 1
+            current = current.next
+        return head
+    def reverseBetween2(self, head, left, right):
+        current = head
+        position = 1
+        index = right - left
+        current2 = None
+        leftNode = None
+        while current != None:
+            if position >= left and position <= right:
+                if position == left:
+                    leftNode = ListNode(current.val, current.next)
+                count = index
+                current2 = leftNode
+                print(f'current2 val = {current2.val}')
+                while count > 0:
+                    current2 = current2.next
+                    count -= 1
+                current.val = current2.val
+                index -= 1
+            position += 1
+            current = current.next
+        return head
+    def reverseKGroup(self, head, k):
+        current1 = head
+        length = 0
+        while current1 != None:
+            length += 1
+            current1 = current.next
+        cycles = length // k
+        current4 = head
+        count = k - 1
+        switches = k // 2
+        beforeCurrent2 = None
+        beforeCurrent1 = current3
+        for i in range(cycles):
+            current3 = current4
+            current1 = current3
+            current2 = current1
+            for j in range(switches):
+                #beforeCurrent1 = current3
+                for k in range(count):
+                    if count == count - 1:
+                        beforeCurrent2 = current2
+                        if j == 0:
+                            current4 = current2.next.next
+                    current2 = current2.next
+                tempNext2 = current2.next
+                tempNext1 = current1.next
+                if current1.next == current2:
+                    current2.next = current1
+                    current1.next = tempNext2
+                    if beforeCurrent1 != current1:
+                        beforeCurrent1.next = current2
+                else:
+                    if beforeCurrent1 != current1:
+                        beforeCurrent1.next = current2
+                    current2.next = current1.next
+                    beforeCurrent2.next = current1
+                    current1.next = tempNext2
+                current1 = tempNext1
+                count -= 1
+                if switches == 0:
+                    continue
+                else:
+                    current2 = current3
+                    beforeCurrent1 = beforeCurrent1.next
+    #Binary Trees
+    def maxDepth(self, root):
+        if root == None:
+            return 0
+        lDepth = Solution.maxDepth(Solution,root.left)
+        rDepth = Solution.maxDepth(Solution,root.right)
+
+        if lDepth >= rDepth:
+            return lDepth + 1
+        else:
+            return rDepth + 1
+    def maxDepth2(self, root):
+        if not root:
+            return 0
+        depth = 0
+        q = []
+        q.append(root)
+        q.append(None)
+
+        while q:
+            curr = q.pop(0)
+            if curr is None:
+                depth += 1
+                if q:
+                    q.append(None)
+            else:
+                if curr.left:
+                    q.append(curr.left)
+                if curr.right:
+                    q.append(curr.right)
+        return depth
+    def maxDepth3(self, root):
+        if root is None:
+            return 0
+        q = [root]
+        h = 0
+        while q:
+            size = len(q)
+            for _ in range(size):
+                temp = q.pop(0)
+                if temp.left:
+                    q.append(temp.left)
+                if temp.right:
+                    q.append(temp.right)
+            h += 1
+        return h
+    def isSameTree(self, p, q):
+        if p.val != q.val:
+            return False
+        arr_p = [p]
+        arr_q = [q]
+        while arr_p:
+            node_p = arr_p.pop(0)
+            node_q = arr_q.pop(0)
+            if not node_p.left:
+                if node_q.left:
+                    print("1st")
+                    return False
+            else:
+                if not node_q.left:
+                    print("2nd")
+                    return False
+                elif node_q.left.val != node_p.left.val:
+                    print("3rd")
+                    return False
+                else:
+                    arr_p.append(node_p.left)
+                    arr_q.append(node_q.left)
+            if not node_p.right:
+                if node_q.right:
+                    print("4th")
+                    return False
+            else:
+                if not node_q.right:
+                    print("5th")
+                    return False
+                elif node_q.right.val != node_p.right.val:
+                    print("6th")
+                    return False
+                else:
+                    arr_p.append(node_p.right)
+                    arr_q.append(node_q.right)
+        return True
+    def invertTree(self, root):
+        if root is None:
+            return 0
+        q = [root]
+        while q:
+            curr = q.pop(0)
+            if curr.left and curr.right:
+                temp = curr.left
+                curr.left = curr.right
+                curr.right = temp
+                q.append(curr.left)
+                q.append(curr.right)
+            else:
+                if curr.left:
+                    curr.right = curr.left
+                    curr.left = None
+                    q.append(curr.right)
+                if curr.right:
+                    curr.left = curr.right
+                    curr.right = None
+                    q.append(curr.left)
+        return root
+            
+
+            
+
+                
+
+            
+
+
+node1 = TreeNode(4)
+node2 = TreeNode(2)
+node3 = TreeNode(7)
+node4 = TreeNode(1)
+node5 = TreeNode(3)
+node6 = TreeNode(6)
+node7 = TreeNode(9)
+node1.left = node2
+node1.right = node3
+node2.left = node4
+node2.right = node5
+node3.left = node6
+node3.right = node7
+solution = Solution()
+result1 = solution.invertTree(node1)
+print(result1.val)
+print(result1.left.val)
+print(result1.right.val)
+print(result1.left.left.val)
+print(result1.left.right.val)
+print(result1.right.left.val)
+print(result1.right.right.val)
+
+
+
+                
+
+
+
+
+                
+
+
+                
+
+
+
+
+        
+
+    
+
+
+            
+
+               
+
+
+
+
+
+       
+
+
+
+          
+
+        
+
+
+
+
+       
+
+                
+
+
+        
+            
+
+
+
+
+
 
                                         
                              
@@ -1028,17 +1410,8 @@ class Solution:
         
                 
 
-solution = Solution
-arr1 = [-1,0,1,2,-1,-4]
-arr2 = [0,1,1]
-arr3 = [0,0,0]	
-arr4 = [-2,0,2,0,4,-4,2,-2,4,4,-4,6,0]
-result1 = solution.threeSum(solution, arr1)
-result2 = solution.threeSum(solution, arr2)
-result3 = solution.threeSum(solution, arr3)
-result4 = solution.threeSum(solution, arr4)
-print(result1)
-print(result2)
-print(result3)
-print(result4)
+
+
+
+
 

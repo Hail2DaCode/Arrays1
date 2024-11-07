@@ -1054,7 +1054,6 @@ public class Solution {
 					}
 					if(!skip) {
 						next[0] = nums[i];
-						next[1] = nums[j];
 						next[2] = nums[k];
 						result.add(next);
 						count += 1;
@@ -1070,6 +1069,345 @@ public class Solution {
 	    }
 	    return result;
     }
+    public List<int[]> threeSum2(int[] nums) {
+	    List<int[]> result = new ArrayList<int[]>();
+	    int count = 0;
+	    boolean skip = false;
+	    for(int i = 0; i < nums.length - 2; i++) {
+		    for(int j = i + 1; j < nums.length - 1; j++) {
+			    int[] next = new int[3];
+			    for(int k = j + 1; k < nums.length; k++) {
+				    if(nums[i] + nums[j] + nums[k] == 0) {
+					    if(count > 0) {
+						    for(int[] array : result) {
+							    int stop = 0;
+							    if(nums[i] == array[0] || nums[i] == array[1] ||  nums[i] == array[2]) {
+								    stop += 1;
+								    }
+							    if(nums[j] == array[0] || nums[j] == array[1] ||  nums[j] == array[2]) {
+								    stop += 1;
+								    }
+							    if(nums[k] == array[0] || nums[k] == array[1] ||  nums[k] == array[2]) {
+								    stop += 1;
+								    }
+							    if(stop == 3) {
+								    skip = true;
+								    break;
+							    }
+						    }
+					    }
+					    if(!skip) {
+						    next[0] = nums[i];
+						    next[1] = nums[j];
+						    next[2] = nums[k];
+						    result.add(next);
+						    count += 1;
+					    }
+					    skip = false;
+				    }
+			    }
+		    }
+	    }
+	    return result;
+    }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+	   ListNode current = l1;
+	    String word = "";
+	    while(current != null) {
+		    word = (char)(current.val + '0') + word;
+		    current = current.next;
+	    }
+	    int firstNum = Integer.parseInt(word);
+	    word = "";
+	    current = l2;
+	    while(current != null) {
+		    word = (char)(current.val + '0') + word;
+		    current = current.next;
+	    }
+	    int secondNum = Integer.parseInt(word);
+	    int sum = firstNum + secondNum;
+	    word = String.valueOf(sum);
+	    ListNode linkList = new ListNode();
+	    for(int i = 0; i < word.length(); i++) {
+		    if(i == 0) {
+			    linkList.val = word.charAt(i) - '0';
+		    }
+		    else {
+			    ListNode newNode = new ListNode(word.charAt(i) - '0', linkList);
+			    linkList = newNode;
+		    }
+	    }
+	    return linkList;
+    }
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+	    ListNode current1 = list1;
+	    ListNode current2 = list2;
+	    ListNode newHead = new ListNode();
+	    if (current1 == null || current2 == null) {
+		    if (current2 != null) {
+			    return list2;
+		    }
+	    }
+	    else {
+		    if (current2.val < current1.val) {
+			    newHead = current2;
+			    System.out.print("Have a new head to list");
+			    while (current2.next != null && current2.next.val < current1.val) {
+				    current2 = current2.next;
+			    }
+			    ListNode head2 = current2.next;
+			    current2.next = current1;
+			    current2 = head2;
+		    }
+		    while (current1.next != null) {
+			    while (current2 != null && current2.val <= current1.next.val) {
+				    ListNode head1 = current1.next;
+				    ListNode head2 = current2.next;
+				    current1.next = current2;
+				    current2.next = head1;
+				    current2 = head2;
+				    System.out.println("In the main loop");
+			    }
+			    System.out.println("In the outer of the main loop");
+			    current1 = current1.next;
+		    }
+		    if (current2 != null && current2.val > current1.val) {
+			    current1.next = current2;
+		    }
+	    }
+	    if (newHead.next != null) {
+		    return newHead;
+	    }
+	    return list1;
+    }
+    public RandomNode copyRandomList(RandomNode head) {
+	    int length = 1;
+	    RandomNode current = head;
+	    while (current != null) {
+		    length += 1;
+		    current = current.next;
+	    }
+	    current = head;
+	    RandomNode[] nodeArray = new RandomNode[length];
+	    int[] indexArray = new int[length];
+	    int index = 0;
+	    while (current != null) {
+		    RandomNode node = new RandomNode(current.val);
+		    nodeArray[index] = node;
+		    RandomNode current2 = head;
+		    int count = 0;
+		    if (current.next == null) {
+			    nodeArray[index + 1] = null;
+		    }
+		    while (current2 != null) {
+			    if (current2 == current.random) {
+				    indexArray[index] = count;
+				    break;
+			    }
+			    count += 1;
+			    if (current2.next == null) {
+				    indexArray[index] = count;
+			    }
+			    current2 = current2.next;
+		    }
+		    current = current.next;
+		    index += 1;
+	    }
+	    for (int i = 0; i < nodeArray.length - 1; i++) {
+		    nodeArray[i].next = nodeArray[i+1];
+		    nodeArray[i].random = nodeArray[indexArray[i]];
+	    }
+	    return nodeArray[0];
+    }
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+	    int[] array = new int[right-left+1];
+	    int position = 1;
+	    ListNode current = head;
+	    int index = array.length - 1;
+	    while(current != null) {
+		    if(position >= left && position <= right) {
+			    array[index] = current.val;
+			    index -= 1;
+		    }
+		    position += 1;
+		    current = current.next;
+	    }
+	    position = 1;
+	    index = 0;
+	    current = head;
+	    while(current != null) {
+		    if(position >= left && position <= right) {
+			    current.val = array[index];
+			    index += 1;
+		    }
+		    position += 1;
+		    current = current.next;
+	    }
+	    return head;
+    }
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+	    ListNode current = head;
+	    int position = 1;
+	    int index = right - left;
+	    ListNode current2;
+	    ListNode leftNode = new ListNode(0);
+	    while(current != null) {
+		    if(position >= left && position <= right) {
+			    if(position == left) {
+				    leftNode.val = current.val;
+				    leftNode.next = current.next;
+			    }
+			    int count = index;
+			    current2 = leftNode;
+			    System.out.printf("current2 val = %d \n", current2.val);
+			    while(count > 0) {
+				    current2 = current2.next;
+				    count -= 1;
+			    }
+			    current.val = current2.val;
+			    index -= 1;
+		    }
+		    position += 1;
+		    current = current.next;
+	    }
+	    return head;
+    }
+    public ListNode reverseKGroup(ListNode root) {
+        return root;
+    }
+    //Binary Trees
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int lDepth = maxDepth(root.left);
+        int rDepth = maxDepth(root.right);
+        if (lDepth >= rDepth) {
+            return lDepth + 1;
+        }
+        else {
+            return rDepth + 1;
+        }
+    }
+    public int maxDepth2(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int depth = 0;
+        ArrayList <TreeNode> q = new ArrayList<TreeNode>();
+        q.add(root);
+        q.add(null);
+        while (!q.isEmpty()) {
+            TreeNode curr = q.remove(0);
+            if (curr == null) {
+                depth += 1;
+                if (!q.isEmpty()) {
+                    q.add(null);
+                }
+            }
+            else {
+                if (curr.left != null) {
+                    q.add(curr.left);
+                }
+                if (curr.right != null) {
+                    q.add(curr.right);
+                }
+            }
+        }
+        return depth;
+    }
+    public int maxDepth3(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        ArrayList<TreeNode> q = new ArrayList<TreeNode>();
+        q.add(root);
+        int h = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = q.remove(0);
+                if (temp.left != null) {
+                    q.add(temp.left);
+                }
+                if (temp.right != null) {
+                    q.add(temp.right);
+                }
+            }
+            h += 1;
+        }
+        return h;
+    }
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p.val != q.val) {
+            return false;
+        }
+        ArrayList<TreeNode> arrayP = new ArrayList<TreeNode>();
+        ArrayList<TreeNode> arrayQ = new ArrayList<TreeNode>();
+        arrayP.add(p);
+        arrayQ.add(q);
+        while (!arrayP.isEmpty()) {
+            TreeNode nodeP = arrayP.remove(0);
+            TreeNode nodeQ = arrayQ.remove(0);
+            if (nodeP.left == null) {
+                if (nodeQ.left != null) {
+                    System.out.println("1st");
+                    return false;
+                }
+            }
+            else {
+                if (nodeQ.left == null) {
+                    System.out.println("2nd");
+                    return false;
+                }
+                else if (nodeQ.left.val != nodeP.left.val) {
+                    System.out.println("3rd");
+                    return false;
+                }
+                else {
+                    arrayP.add(nodeP.left);
+                    arrayQ.add(nodeQ.left);
+                }
+            }
+            if (nodeP.right == null) {
+                if (nodeQ.right != null) {
+                    System.out.println("4th");
+                    return false;
+                }
+            }
+            else {
+                if (nodeQ.right == null) {
+                    System.out.println("5th");
+                    return false;
+                }
+                else if (nodeQ.right.val != nodeP.right.val) {
+                    System.out.println("6th");
+                    return false;
+                }
+                else {
+                    arrayP.add(nodeP.right);
+                    arrayQ.add(nodeQ.right);
+                }
+            }
+        }
+        return true;
+    }
+    
+
+
+
+
+
+		    
+
+
+			     
+			    
+
+
+
+
+
 }
 
 							
